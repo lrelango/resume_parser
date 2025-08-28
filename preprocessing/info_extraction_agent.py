@@ -50,8 +50,11 @@ def extract_info_agent(document_text):
     )
     prompt = (
         "You are an expert resume parser. Extract the following information from the resume text below. "
-        "If a field is not present, leave it blank. Return ONLY the result as JSON in the format below. "
-        "Do not include any extra text.\n"
+        "Return ONLY the result as JSON in the format below. Do not include any extra text.\n"
+        "Check for address in the text to extract location.\n"
+        "For 'age', 'gender', 'location, 'email', 'phone' is empty, fill it as 'No info'. \n"
+        "For 'experience', look for phrases like 'years of experience', 'worked for', 'experience summary', etc. "
+        "If a field is not present, fill as 'No Info'. \n"
         f"{format_instructions}\n"
         "Example Resume Text:\n"
         "Name: Jane Doe\nEmail: jane.doe@email.com\nPhone: +91-1234567890\nLocation: Mumbai\n"
@@ -59,6 +62,23 @@ def extract_info_agent(document_text):
         "Candidate Summary: Enthusiastic developer with 2 years of experience.\n"
         "Example Output:\n"
         f"{example_output}\n"
+        "Another Example Resume Text:\n"
+        "Name: John Smith\nEmail: john.smith@email.com\nPhone: +91-9876543210\nLocation: Delhi\n"
+        "Qualification: M.Sc. Information Technology\nExperience: 10+ years in IT industry\nSkills: Java, Spring, Hibernate\n"
+        "Candidate Summary: Senior IT professional with over 10 years of experience in software development.\n"
+        "Example Output:\n"
+        "{{\n"
+        '  "name": "John Smith",\n'
+        '  "age": "",\n'
+        '  "gender": "",\n'
+        '  "location": "Delhi",\n'
+        '  "email": "john.smith@email.com",\n'
+        '  "phone": "+91-9876543210",\n'
+        '  "qualification": "M.Sc. Information Technology",\n'
+        '  "experience": "10+ years",\n'
+        '  "skills": ["Java", "Spring", "Hibernate"],\n'
+        '  "candidate_summary": "Senior IT professional with over 10 years of experience in software development."\n'
+        "}}\n"
         "Resume Text:\n"
         "{input}"
     )

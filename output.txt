@@ -45,3 +45,17 @@ d:\AI-Handson\langchain_handson\preprocessing\info_extraction_agent.py:65: LangC
 
 Extracted Information (JSON):
 {'name': 'SURESH R', 'age': '', 'gender': '', 'location': 'Chennai', 'email': 'Ramadoss.suresh@gmail.com', 'phone': '9840854289', 'qualification': 'Master of Computer Applications', 'experience': '16+ years', 'skills': ['SQL Server', 'VB.net', 'ASP.net', 'HTML', 'SSRS'], 'candidate_summary': 'Solutions driven Business Analyst with experience leading cross-functional teams in the development, documentation and delivery of process innovations driving the attainment of Business goals.'}
+
+
+Docx - resume_1
+
+{'name': 'John Doe', 'age': 'No info', 'gender': 'No info', 'location': 'Chennai', 'email': 'john.doe@email.com', 'phone': '+91-9876543210', 'qualification': 'B.Sc. Computer Science', 'experience': 'No info', 'skills': ['Python', 'Java', 'pandas', 'numpy', 'matplotlib', 'Git', 'VS Code', 'Jupyter Notebook', 'SQLite', 'MySQL'], 'candidate_summary': 'Enthusiastic Python learner with hands-on experience in small projects. Seeking an entry-level role to apply problem-solving and programming skills in real-world applications.'}
+
+Docx- resume_2
+
+{'name': 'Parthiban S', 'age': 'No info', 'gender': 'No info', 'location': 'Bengaluru', 'email': 'parthibanshiva@gmail.com', 'phone': '+91 8660329280', 'qualification': 'Bachelor of Engineering in Mechanical', 'experience': '1.6 years', 'skills': ['Python', 'C/C++', 'Labview', 'HTML', 'CSS', 'JS', 'next js'], 'candidate_summary': 'Diligent Software Developer with 1.6 years’ experience in commercial application Development. Looking forward to join progressive organization and to fully utilize my skills and with capability of constantly updating my skills.'}
+
+Pdf output-
+Extracted Information (JSON):
+{'name': 'SURESH R', 'age': 'No info', 'gender': 'No info', 'location': 'Chennai', 'email': 'Ramadoss.suresh@gmail.com', 'phone': '9840854289', 'qualification': 'Master of Computer Applications', 'experience': '16.0 Years', 'skills': ['SQL Server', 'VB.net', 'ASP', 'ASP.net', 'SSRS'], 'candidate_summary': 'Solutions driven Business Analyst with experience leading cross-functional teams in the development, documentation and delivery of process innovations driving the attainment of Business goals.'}
+

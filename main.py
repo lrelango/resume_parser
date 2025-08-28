@@ -3,7 +3,7 @@ from preprocessing.info_extraction_agent import extract_info_agent
 
 def main():
     # Example: Load a sample resume (PDF or DOCX)
-    file_path = "data/resume_2.docx"
+    file_path = "data/Resume_2.pdf"
     docs = load_resume(file_path)
 
     # Combine all chunks into one string

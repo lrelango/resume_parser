@@ -26,6 +26,7 @@ def main():
     print("\nExtracted DataFrame:")
     print(df)
 
+
     df.to_csv("extracted_resume_info.csv", index=False)
 
 if __name__ == "__main__":

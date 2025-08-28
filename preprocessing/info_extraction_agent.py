@@ -52,24 +52,26 @@ def extract_info_agent(document_text):
         "You are an expert resume parser. Extract the following information from the resume text below. "
         "Return ONLY the result as JSON in the format below. Do not include any extra text.\n"
         "Check for address in the text to extract location.\n"
-        "For 'age', 'gender', 'location, 'email', 'phone' is empty, fill it as 'No info'. \n"
+        "For 'age', if date of birth, year of birth, or related information is present, calculate and fill the age. "
+        "If not, fill as 'No Info'.\n"
+        "For 'gender', 'location', 'email', 'phone', if empty, fill as 'No Info'.\n"
         "For 'experience', look for phrases like 'years of experience', 'worked for', 'experience summary', etc. "
-        "If a field is not present, fill as 'No Info'. \n"
+        "If any field is not present or empty, fill as 'No Info'.\n"
         f"{format_instructions}\n"
         "Example Resume Text:\n"
-        "Name: Jane Doe\nEmail: jane.doe@email.com\nPhone: +91-1234567890\nLocation: Mumbai\n"
+        "Name: Jane Doe\nDate of Birth: 1995-08-12\nEmail: jane.doe@email.com\nPhone: +91-1234567890\nLocation: Mumbai\n"
         "Qualification: B.Tech Computer Science\nExperience: 2 Years\nSkills: Python, SQL, HTML\n"
         "Candidate Summary: Enthusiastic developer with 2 years of experience.\n"
         "Example Output:\n"
         f"{example_output}\n"
         "Another Example Resume Text:\n"
-        "Name: John Smith\nEmail: john.smith@email.com\nPhone: +91-9876543210\nLocation: Delhi\n"
+        "Name: John Smith\nDOB: 1988\nEmail: john.smith@email.com\nPhone: +91-9876543210\nLocation: Delhi\n"
         "Qualification: M.Sc. Information Technology\nExperience: 10+ years in IT industry\nSkills: Java, Spring, Hibernate\n"
         "Candidate Summary: Senior IT professional with over 10 years of experience in software development.\n"
         "Example Output:\n"
         "{{\n"
         '  "name": "John Smith",\n'
-        '  "age": "",\n'
+        '  "age": "36",\n'  # Example: If DOB is 1988 and current year is 2024
         '  "gender": "",\n'
         '  "location": "Delhi",\n'
         '  "email": "john.smith@email.com",\n'

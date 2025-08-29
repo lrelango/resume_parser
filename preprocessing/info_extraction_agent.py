@@ -1,10 +1,11 @@
 from langchain_openai import ChatOpenAI
-from langchain.tools import Tool
-from langchain.agents import initialize_agent, AgentType
 from langchain.output_parsers import StructuredOutputParser, ResponseSchema
+from langchain.prompts import PromptTemplate
+from langchain.callbacks import get_openai_callback
 from dotenv import load_dotenv
 import os
 import json
+from datetime import datetime
 
 # Load environment variables
 load_dotenv()
@@ -26,80 +27,50 @@ response_schemas = [
 
 output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
 
-def extract_info_agent(document_text):
+def extract_info_agent(document_text: str):
     llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, openai_api_key=openai_api_key)
-    doc_tool = Tool(
-        name="Document Loader",
-        func=lambda x: x,
-        description="Loads the resume document text for extraction."
+
+    format_instructions = output_parser.get_format_instructions()
+    current_date = datetime.now().strftime("%B %d, %Y")
+
+    prompt_template = PromptTemplate(
+        template=(
+            f"You are an expert resume parser. Today's date is {current_date}. "
+            "Use this date to calculate age from date of birth or year of birth.\n"
+            "Extract the following information from the resume text below. "
+            "Return ONLY the result as JSON in the specified format. Do not include any extra text.\n"
+            "Check for address in the text to extract location.\n\n"
+
+            "For 'age': If date of birth (DOB) or year of birth is explicitly present in ANY common format "
+            "(YYYY-MM-DD, DD-MM-YYYY, DD-MMM-YYYY, etc.), calculate the age using today's date. "
+            "If not present, strictly return 'No Info'.\n\n"
+
+            "For EVERY field (name, age, gender, location, email, phone, qualification, "
+            "experience, skills, candidate_summary): If information is not explicitly present "
+            "or cannot be determined, strictly return 'No Info'. Never leave a field blank.\n\n"
+
+            "{format_instructions}\n\n"
+            "Resume Text:\n{input}"
+        ),
+        input_variables=["input"],
+        partial_variables={"format_instructions": format_instructions},
     )
-    format_instructions = output_parser.get_format_instructions().replace("{", "{{").replace("}", "}}")
-    example_output = (
-        "{{\n"
-        '  "name": "Jane Doe",\n'
-        '  "age": "",\n'
-        '  "gender": "",\n'
-        '  "location": "Mumbai",\n'
-        '  "email": "jane.doe@email.com",\n'
-        '  "phone": "+91-1234567890",\n'
-        '  "qualification": "B.Tech Computer Science",\n'
-        '  "experience": "2 Years",\n'
-        '  "skills": ["Python", "SQL", "HTML"],\n'
-        '  "candidate_summary": "Enthusiastic developer with 2 years of experience."\n'
-        "}}"
-    )
-    prompt = (
-        "You are an expert resume parser. Extract the following information from the resume text below. "
-        "Return ONLY the result as JSON in the format below. Do not include any extra text.\n"
-        "Check for address in the text to extract location.\n"
-        "For 'age', if date of birth, year of birth, or related information is present, calculate and fill the age. "
-        "If not, fill as 'No Info'.\n"
-        "For 'gender', 'location', 'email', 'phone', if empty, fill as 'No Info'.\n"
-        "For 'experience', look for phrases like 'years of experience', 'worked for', 'experience summary', etc. "
-        "If any field is not present or empty, fill as 'No Info'.\n"
-        f"{format_instructions}\n"
-        "Example Resume Text:\n"
-        "Name: Jane Doe\nDate of Birth: 1995-08-12\nEmail: jane.doe@email.com\nPhone: +91-1234567890\nLocation: Mumbai\n"
-        "Qualification: B.Tech Computer Science\nExperience: 2 Years\nSkills: Python, SQL, HTML\n"
-        "Candidate Summary: Enthusiastic developer with 2 years of experience.\n"
-        "Example Output:\n"
-        f"{example_output}\n"
-        "Another Example Resume Text:\n"
-        "Name: John Smith\nDOB: 1988\nEmail: john.smith@email.com\nPhone: +91-9876543210\nLocation: Delhi\n"
-        "Qualification: M.Sc. Information Technology\nExperience: 10+ years in IT industry\nSkills: Java, Spring, Hibernate\n"
-        "Candidate Summary: Senior IT professional with over 10 years of experience in software development.\n"
-        "Example Output:\n"
-        "{{\n"
-        '  "name": "John Smith",\n'
-        '  "age": "36",\n'  # Example: If DOB is 1988 and current year is 2024
-        '  "gender": "",\n'
-        '  "location": "Delhi",\n'
-        '  "email": "john.smith@email.com",\n'
-        '  "phone": "+91-9876543210",\n'
-        '  "qualification": "M.Sc. Information Technology",\n'
-        '  "experience": "10+ years",\n'
-        '  "skills": ["Java", "Spring", "Hibernate"],\n'
-        '  "candidate_summary": "Senior IT professional with over 10 years of experience in software development."\n'
-        "}}\n"
-        "Resume Text:\n"
-        "{input}"
-    )
-    agent = initialize_agent(
-        tools=[doc_tool],
-        llm=llm,
-        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-        verbose=False
-    )
-    result = agent.invoke({"input": prompt.format(input=document_text)})
-    print("\n[DEBUG] Raw LLM output:\n", result)
-    output_str = result.get("output", "")
-    output_str = output_str.strip()
-    if output_str.startswith("```json"):
-        output_str = output_str[len("```json"):].strip()
-    if output_str.endswith("```"):
-        output_str = output_str[:-3].strip()
+
+    chain = prompt_template | llm | output_parser
+
     try:
-        return json.loads(output_str)
+        with get_openai_callback() as cb:
+            result = chain.invoke({"input": document_text})
+
+            print("----- Token Usage & Cost -----")
+            print(f"Prompt Tokens: {cb.prompt_tokens}")
+            print(f"Completion Tokens: {cb.completion_tokens}")
+            print(f"Total Tokens: {cb.total_tokens}")
+            print(f"Total Cost (USD): ${cb.total_cost:.6f}")
+            print("------------------------------")
+
+        return result
     except Exception as e:
-        print("[ERROR] Could not parse cleaned output as JSON:", e)
-        return output_str
+        print("[ERROR] Could not parse JSON:", e)
+        return {"error": str(e)}
+

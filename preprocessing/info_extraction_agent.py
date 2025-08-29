@@ -1,4 +1,5 @@
-from langchain_openai import ChatOpenAI
+#from langchain_openai import ChatOpenAI
+from langchain_community.chat_models import ChatOllama
 from langchain.output_parsers import StructuredOutputParser, ResponseSchema
 from langchain.prompts import PromptTemplate
 from langchain.callbacks import get_openai_callback
@@ -9,7 +10,7 @@ from datetime import datetime
 
 # Load environment variables
 load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
+#openai_api_key = os.getenv("OPENAI_API_KEY")
 
 # Define the schema for extraction
 response_schemas = [
@@ -28,8 +29,8 @@ response_schemas = [
 output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
 
 def extract_info_agent(document_text: str):
-    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, openai_api_key=openai_api_key)
-
+    #llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, openai_api_key=openai_api_key)
+    llm = ChatOllama(model="llama3")
     format_instructions = output_parser.get_format_instructions()
     current_date = datetime.now().strftime("%B %d, %Y")
 

@@ -1,7 +1,3 @@
-d:\AI-Handson\langchain_handson\preprocessing\info_extraction_agent.py:4: LangChainDeprecationWarning: Importing get_openai_callback from D:\AI-Handson\langchain_handson\.venv\Lib\site-packages\langchain\callbacks\__init__.py is deprecated. Please replace deprecated imports:
-
->> from D:\AI-Handson\langchain_handson\.venv\Lib\site-packages\langchain\callbacks\__init__.py import get_openai_callback
-
 with new imports of:
 
 >> from langchain_community.callbacks.manager import get_openai_callback
@@ -72,3 +68,51 @@ Extracted DataFrame:
 2  Parthiban S  37  ...     Python, C/C++, Labview, HTML, CSS, JS, next js  Diligent Software Developer with 1.6 years’ ex...   
 
 [3 rows x 10 columns]
+
+
+
+
+Llama3 output
+-------------
+
+ the class exists in the :class:`~langchain-ollama package and should be used instead. To use it run `pip install -U :class:`~langchain-ollama` and import as `from :class:`~langchain_ollama import ChatOllama``.  
+  llm = ChatOllama(model="llama3")
+[ERROR] Could not parse JSON: Got invalid JSON object. Error: Expecting property name enclosed in double quotes: line 3 column 15 (char 37)
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE
+
+Extracted Information (JSON):
+{'error': 'Got invalid JSON object. Error: Expecting property name enclosed in double quotes: line 3 column 15 (char 37)\nFor troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE '}
+Loaded 1 documents from data/resume_1.docx
+
+--- Full Resume ---
+
+----- Token Usage & Cost -----
+Prompt Tokens: 0
+Completion Tokens: 0
+Total Tokens: 0
+Total Cost (USD): $0.000000
+------------------------------
+
+Extracted Information (JSON):
+{'name': 'John Doe', 'age': '22 years old', 'gender': 'Male', 'location': 'Chennai-600036, India', 'email': 'john.doe@email.com', 'phone': '+91-9876543210', 'qualification': 'B.Sc. Computer Science', 'experience': 'No Info', 'skills': 'Python, Java (basic), pandas, numpy, matplotlib, Git, VS Code, Jupyter Notebook, SQLite, MySQL', 'candidate_summary': 'Enthusiastic Python learner with hands-on experience in small projects.'}
+Loaded 1 documents from data/resume_2.docx
+
+--- Full Resume ---
+
+----- Token Usage & Cost -----
+Prompt Tokens: 0
+Completion Tokens: 0
+Total Tokens: 0
+Total Cost (USD): $0.000000
+------------------------------
+
+Extracted Information (JSON):
+{'name': 'Parthiban S', 'age': '37 years old (as of August 29, 2025)', 'gender': 'No Info', 'location': '#365, 2nd main, 5th cross, BSK 1st stage, Srinivasnagar, Bengaluru -560 050', 'email': 'parthibanshiva@gmail.com', 'phone': '+91 8660329280, +91 8951249345', 'qualification': 'Bachelor of Engineering in Mechanical from BMSCE(2006-2014)', 'experience': '1.6 years’ experience', 'skills': 'Python, C/C++, Labview, HTML, CSS, JS, next js(BASICS), Windows 7,Windows 10, Windows 11,Ubuntu-18.04,RHEL-7', 'candidate_summary': 'Diligent Software Developer with 1.6 years’ experience in commercial application Development.'}
+
+Extracted DataFrame:
+                                               error  ...                                  candidate_summary
+0  Got invalid JSON object. Error: Expecting prop...  ...                                                NaN
+1                                                NaN  ...  Enthusiastic Python learner with hands-on expe...
+2                                                NaN  ...  Diligent Software Developer with 1.6 years’ ex...
+
+[3 rows x 11 columns]

@@ -1,12 +1,53 @@
+d:\AI-Handson\langchain_handson\preprocessing\info_extraction_agent.py:4: LangChainDeprecationWarning: Importing get_openai_callback from D:\AI-Handson\langchain_handson\.venv\Lib\site-packages\langchain\callbacks\__init__.py is deprecated. Please replace deprecated imports:
+
+>> from D:\AI-Handson\langchain_handson\.venv\Lib\site-packages\langchain\callbacks\__init__.py import get_openai_callback
+
+with new imports of:
+
+>> from langchain_community.callbacks.manager import get_openai_callback
+You can use the langchain cli to **automatically** upgrade many imports. Please see documentation here <https://python.langchain.com/docs/versions/v0_2/>
+  from langchain.callbacks import get_openai_callback
+Loaded 4 documents from data/Resume_2.pdf
+
 --- Full Resume ---
 
+----- Token Usage & Cost -----
+Prompt Tokens: 2859
+Completion Tokens: 167
+Total Tokens: 3026
+Total Cost (USD): $0.001680
+------------------------------
 
-Extracted Information (JSON):
-{'name': 'SURESH R', 'age': '47', 'gender': 'No Info', 'location': 'Chennai', 'email': 'Ramadoss.suresh@gmail.com', 'phone': '9840854289', 'qualification': 'Master of Computer Applications', 'experience': '16.0 Years', 'skills': 'SQL Server, VB.net, Visual basic, HTML, ASP, ASP.net, SSRS', 'candidate_summary': 'Solutions driven Business Analyst with experience leading cross-functional teams in the development, documentation and delivery of process innovations driving the attainment of Business goals. Seeking a challenging role in a reputed organization to utilize Technical, Management and Leadership skills for the growth of organization and enhance knowledge in the Industry.'}
+----- Token Usage & Cost -----
+Prompt Tokens: 2859
+Completion Tokens: 167
+Total Tokens: 3026
+Total Cost (USD): $0.001680
+------------------------------
+----- Token Usage & Cost -----
+Prompt Tokens: 2859
+Completion Tokens: 167
+Total Tokens: 3026
+Total Cost (USD): $0.001680
+------------------------------
+Prompt Tokens: 2859
+Completion Tokens: 167
+Total Tokens: 3026
+Total Cost (USD): $0.001680
+------------------------------
+Completion Tokens: 167
+Total Tokens: 3026
+{'name': 'SURESH R', 'age': '48', 'gender': 'No Info', 'location': 'Chennai', 'email': 'Ramadoss.suresh@gmail.com', 'phone': '9840854289', 'qualification': 'Master of Computer Applications', 'experience': '16.0 Years', 'skills': 'SQL Server, VB.net, Visual basic, HTML, ASP, ASP.net, SSRS', 'candidate_summary': 'Solutions driven Business Analyst with experience leading cross-functional teams in the development, documentation and delivery of process innovations driving the attainment of Business goals. Seeking a challenging role in a reputed organization to utilize Technical, Management and Leadership skills for the growth of organization and enhance knowledge in the Industry.'}
 Loaded 1 documents from data/resume_1.docx
 
 --- Full Resume ---
 
+----- Token Usage & Cost -----
+Prompt Tokens: 568
+Completion Tokens: 142
+Total Tokens: 710
+Total Cost (USD): $0.000497
+------------------------------
 
 Extracted Information (JSON):
 {'name': 'John Doe', 'age': '22', 'gender': 'Male', 'location': 'Chennai', 'email': 'john.doe@email.com', 'phone': '+91-9876543210', 'qualification': 'B.Sc. Computer Science', 'experience': 'No Info', 'skills': 'Python, Java, pandas, numpy, matplotlib, Git, VS Code, Jupyter Notebook, SQLite, MySQL', 'candidate_summary': 'Enthusiastic Python learner with hands-on experience in small projects. Seeking an entry-level role to apply problem-solving and programming skills in real-world applications.'}
@@ -14,14 +55,20 @@ Loaded 1 documents from data/resume_2.docx
 
 --- Full Resume ---
 
+----- Token Usage & Cost -----
+Prompt Tokens: 1028
+Completion Tokens: 154
+Total Tokens: 1182
+Total Cost (USD): $0.000745
+------------------------------
 
 Extracted Information (JSON):
 {'name': 'Parthiban S', 'age': '37', 'gender': 'No Info', 'location': 'Bengaluru', 'email': 'parthibanshiva@gmail.com', 'phone': '+91 8660329280', 'qualification': 'Bachelor of Engineering in Mechanical', 'experience': '1.6 years', 'skills': 'Python, C/C++, Labview, HTML, CSS, JS, next js', 'candidate_summary': 'Diligent Software Developer with 1.6 years’ experience in commercial application Development. Looking forward to join progressive organization and to fully utilize my skills and with capability of constantly updating my skills.'}
 
 Extracted DataFrame:
-          name age  ...                                             skills                                  candidate_summary        
-0     SURESH R  47  ...  SQL Server, VB.net, Visual basic, HTML, ASP, A...  Solutions driven Business Analyst with experie...        
-1     John Doe  22  ...  Python, Java, pandas, numpy, matplotlib, Git, ...  Enthusiastic Python learner with hands-on expe...        
-2  Parthiban S  37  ...     Python, C/C++, Labview, HTML, CSS, JS, next js  Diligent Software Developer with 1.6 years’ ex...        
+          name age  ...                                             skills                                  candidate_summary   
+0     SURESH R  48  ...  SQL Server, VB.net, Visual basic, HTML, ASP, A...  Solutions driven Business Analyst with experie...   
+1     John Doe  22  ...  Python, Java, pandas, numpy, matplotlib, Git, ...  Enthusiastic Python learner with hands-on expe...   
+2  Parthiban S  37  ...     Python, C/C++, Labview, HTML, CSS, JS, next js  Diligent Software Developer with 1.6 years’ ex...   
 
 [3 rows x 10 columns]
